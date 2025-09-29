@@ -1,0 +1,20 @@
+import React from 'react'
+import Navbar from '../Navbar';
+import Hero from './Hero';
+import Card from './Card';
+import Filters from './Filters';
+import Footer from '../Footer';
+import Pagination from './pagination';
+
+const HomePage = () => {
+    return (
+        <>
+            <Hero />
+            <Filters />
+            <Card/>
+            <Pagination/>
+        </>
+    )
+}
+
+export default HomePage;
