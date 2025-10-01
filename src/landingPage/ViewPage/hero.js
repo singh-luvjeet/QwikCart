@@ -1,19 +1,46 @@
-import React, { useState } from 'react'
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { CartContext } from "../context/Cart"
 import imga from '../../assets/imgA.png'
 import imgb from '../../assets/imgB.png'
 import imgc from '../../assets/imgC.png'
 import imgd from '../../assets/imgD.png'
 
 const Hero = () => {
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(1);
+  const { addToCart } = useContext(CartContext);
+
+  const { id } = useParams(); // get the product id from URL
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/cards/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (!product) return <p>Loading...</p>;
 
   const countPlus = () => {
-    setCount(count + 1)
+    if(count>19){
+      return;
+    }
+    setCount(count + 1);
   }
   const countMinus = () => {
-    if (count <= 1) return
-    setCount(count - 1)
+    if (count <= 1) {
+      return;
+    }
+    setCount(count - 1);
   }
+
   return (
     <>
       <div className='container' style={{ marginTop: '10vh' }}>
@@ -41,10 +68,9 @@ const Hero = () => {
           <div className='col-1'></div>
 
           <div className='col-5'>
-            <h1 className='fw-semibold'>Airpods-Max</h1>
+            <h1 className='fw-semibold'>{product.name}</h1>
             <p className='text-muted' style={{ fontSize: '10px' }}>
-              a perfect balance of exhilarating high fiedility audio and the{' '}
-              <br></br>effortless magic of AirPods
+              {product.description}
             </p>
             <div
               className='cardStar mb-4'
@@ -58,7 +84,7 @@ const Hero = () => {
               <span className='text-muted'>(121)</span>
             </div>
             <hr style={{ borderColor: '#f6dddd' }}></hr>
-            <h4 className='fw-semibold'>$549.00 or 99.99/month</h4>
+            <h4 className='fw-semibold'>${product.price}</h4>
             <p className='text-muted' style={{ fontSize: '10px' }}>
               Suggested payments with 6 months special financing
             </p>
@@ -76,6 +102,8 @@ const Hero = () => {
               <button
                 onClick={countMinus}
                 className='counterButton'
+                disabled={count===1}
+               
                 style={{
                   borderBottomLeftRadius: '30px',
                   borderTopLeftRadius: '30px',
@@ -90,6 +118,7 @@ const Hero = () => {
               <button
                 onClick={countPlus}
                 className='counterButton'
+                disabled={count===20}
                 style={{
                   borderBottomRightRadius: '30px',
                   borderTopRightRadius: '30px',
@@ -107,6 +136,7 @@ const Hero = () => {
             <div className='d-flex justify-content-start'>
               <button
                 class='btn viewBtn'
+                onClick={() => addToCart(product, count)}
                 style={{
                   marginRight: '40px',
                   marginLeft: '3px',
@@ -120,7 +150,7 @@ const Hero = () => {
               </button>
             </div>
 
-            <table className='mt-3' style={{borderCollapse:"collapse", width:"100%"}}>
+            <table className='mt-3 mb-5' style={{borderCollapse:"collapse", width:"100%"}}>
               <tr className='lh-1'>
               <td className='p-2' style={{border:"0.5px solid #f6dddd"}}>
                 <p className='fw-semibold' style={{fontSize:"15px"}}><i class="fa fa-bus" style={{color: "#FA812F"}} aria-hidden="true"></i> &nbsp; Free Delivery</p>

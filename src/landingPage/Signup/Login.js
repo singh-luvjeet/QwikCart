@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
-import './App.css'
-import image4 from './assets/go.png'
-import image5 from './assets/gi.png'
-import image6 from './assets/f.png'
+import '../../App.css'
+import image4 from '../../assets/go.png'
+import image5 from '../../assets/gi.png'
+import image6 from '../../assets/f.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FaEye } from 'react-icons/fa'
 import { FaEyeSlash } from 'react-icons/fa'
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = ({ setToggle }) => {
+  const navigate = useNavigate();
   const [type, setType] = useState('password')
   const [icon, setIcon] = useState(FaEyeSlash)
   const handleToggle = () => {
@@ -23,6 +27,15 @@ const Login = ({ setToggle }) => {
   function handleClick () {
     setToggle()
   }
+
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "top-right",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "top-right",
+    });
 
   const formik = useFormik({
     initialValues: {
@@ -41,9 +54,27 @@ const Login = ({ setToggle }) => {
         // .matches(/[!@#$%^&*]/, 'Password must contain at least one special character')
         .required('Password is required')
     }),
-    onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2))
-      resetForm()
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:4000/login",
+            values,
+          { withCredentials: true }
+        );
+        console.log(data);
+        const { success, message } = data;
+        if (success) {
+          handleSuccess(message);
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        } else {
+          handleError(message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      resetForm();
     }
   })
 
@@ -122,6 +153,7 @@ const Login = ({ setToggle }) => {
           <img src={image6} className='facebook' alt='..' />
         </div>
       </form>
+      <ToastContainer/>
     </>
   )
 }

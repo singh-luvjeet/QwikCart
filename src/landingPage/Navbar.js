@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CartContext } from './context/Cart';
 
 const Navbar = () => {
-    function submitHandler(e){
-        e.preventDefault();
-    }
+  const { cartItems } = useContext(CartContext);
+
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  function submitHandler(e){
+      e.preventDefault();
+  }
   return (
     <>
       <div className='d-flex justify-content-around align-items-center navColor'>
@@ -101,9 +106,14 @@ const Navbar = () => {
               </li> 
 
               <li class='nav-item ms-4'>
-                <a class='nav-link' href='#'>
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Cart
-                </a>
+                <a class='nav-link position-relative' href='#'>
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
+                {totalItems > 0 && (
+                <span className="position-absolute top-0 start-100 navTranslate badge rounded-pill bg-success">
+                  {totalItems}
+                </span>
+              )}
+                  </a>
               </li>
       </ul>
           </div>

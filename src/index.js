@@ -3,12 +3,15 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SignupOrLoginPage from './SignupOrLoginPage';
+import { CartProvider } from './landingPage/context/Cart';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <App/>
+    <CartProvider>
+      <App/>
+    </CartProvider>
   </React.StrictMode>
 );
 

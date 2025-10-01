@@ -9,10 +9,12 @@ import Pagination from './pagination';
 const HomePage = () => {
     return (
         <>
+            <Navbar/>
             <Hero />
             <Filters />
             <Card/>
             <Pagination/>
+            <Footer/>
         </>
     )
 }

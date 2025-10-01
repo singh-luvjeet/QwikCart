@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Login from './Login';
+import image1 from '../../assets/img1.jpg';
+import image2 from '../../assets/img2.jpg';
+import image3 from '../../assets/img3.jpg';
 import Signup from './Signup';
-import image1 from './assets/img1.jpg';
-import image2 from './assets/img2.jpg';
-import image3 from './assets/img3.jpg';
+import Login from './Login';
 
 const  SignupOrLoginPage=()=> {
     const [toggle, setToggle] = useState(false);
@@ -29,19 +29,19 @@ const  SignupOrLoginPage=()=> {
                 <div className="carousel-item active" data-bs-interval="2000">
                   <img src={image1} className="image " alt="..." />
                   <div className="carousel-caption d-none d-md-block">
-                  <h5>Welcome to Green Avenue</h5>
+                  <h5>Welcome to QwikCart</h5>
                   </div>
                 </div>
                 <div className="carousel-item" data-bs-interval="2000">
                   <img src={image2} className="image " alt="..." />
                   <div className="carousel-caption d-none d-md-block">
-                  <h5>Welcome to Green Avenue</h5>
+                  <h5>Welcome to QwikCart</h5>
                   </div>
                 </div>
                 <div className="carousel-item" data-bs-interval="2000">
                   <img src={image3} className="image " alt="..." />
                   <div className="carousel-caption d-none d-md-block">
-                    <h5>Welcome to Green Avenue</h5>
+                    <h5>Welcome to QwikCart</h5>
                   </div>
                 </div>
               </div>

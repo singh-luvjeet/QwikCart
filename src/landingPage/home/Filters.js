@@ -4,7 +4,7 @@ import Button from '../Button'
 const Filters = () => {
   return (
     <>
-      <div className='d-flex justify-content-between align-items-center'>
+      <div className='d-flex justify-content-between align-items-center filterDiv'>
         <div style={{ margin: '50px 0 0 75px' }}>
           <Button class name='Headphone Type' />
           <Button name='Price' />

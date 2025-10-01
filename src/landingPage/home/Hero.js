@@ -6,7 +6,7 @@ const Hero = () => {
     <>
       <div className='Container heroContainer'>
         <div className='row'>
-          <div className='col-7 d-flex justify-content-center align-items-center flex-column'  >
+          <div className='col-7 d-flex justify-content-center align-items-center flex-column leftHero'  >
             <h1 className='heroH2' >
               Grab Upto 50% Off On <br></br> Selected Headphones
             </h1>

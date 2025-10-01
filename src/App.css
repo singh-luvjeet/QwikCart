@@ -182,6 +182,11 @@ span {
   position: absolute;
 }
 
+.navTranslate{
+  transform: translate(-50%, 0%)
+  
+}
+
 /* Hero Section */
 
 .buttonHero{
@@ -200,6 +205,7 @@ span {
   margin-left: 80px ;
   margin-right: 80px;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 heroCol1{
@@ -215,15 +221,80 @@ heroCol1{
   width: 440px;
 }
 
+
+@keyframes slideInFromBottomRight {
+  0% {
+    transform: translateX(80%) translateY(80%);
+    
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+    
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(80%);
+    
+  }
+  100% {
+    transform: translateY(0);
+    
+  }
+}
+
+
 .imageHero{
+  
+  animation-duration: 0.3s; /* the duration of the animation */
+  animation-timing-function: ease-out; /* how the animation will behave */
+  animation-delay: 0s; /* how long to delay the animation from starting */
+  animation-iteration-count: 1; /* how many times the animation will play */
+  animation-name: slideInFromBottomRight; /* the name of the animation we defined above */
+  
+
   margin-top: 30px;
   width: 60%;
 }
 
+.leftHero{
+  animation-duration: 0.3s; /* the duration of the animation */
+  animation-timing-function: ease-out; /* how the animation will behave */
+  animation-delay: 0s; /* how long to delay the animation from starting */
+  animation-iteration-count: 1; /* how many times the animation will play */
+  animation-name: slideInFromBottom; /* the name of the animation we defined above */
+}
+  
+.filterDiv{
+  animation-duration: 0.3s; /* the duration of the animation */
+  animation-timing-function: ease-out; /* how the animation will behave */
+  animation-delay: 0s; /* how long to delay the animation from starting */
+  animation-iteration-count: 1; /* how many times the animation will play */
+  animation-name: slideInFromBottom; /* the name of the animation we defined above */
+}
 
 
 
 /* Card */
+
+.card{
+  animation-duration: 0.3s; /* the duration of the animation */
+  animation-timing-function: ease-out; /* how the animation will behave */
+  animation-delay: 0s; /* how long to delay the animation from starting */
+  animation-iteration-count: 1; /* how many times the animation will play */
+  animation-name: slideInFromBottom; /* the name of the animation we defined above */
+
+  
+}
+
+
+
+.card:hover{
+  transform: scaleX(1.03) scaleY(1.03);
+  transform-origin: top;
+}
+
 
 .cardWidth{
   width: 18rem;
@@ -266,7 +337,7 @@ heroCol1{
 
 .cardBtn{
   border: 0.4px solid black;
-  
+
   margin-left: -10px;
   border-radius: 30px;
   
@@ -296,10 +367,26 @@ heroCol1{
 .cardHeart{
   position: absolute;
   z-index: 10;
-  right: 20px;
-  top: 20px;
+  right: 21px;
+  top: 21px;
   background-color: white;
   border-radius: 100%;
+}
+
+.redHeart{
+  position: absolute;
+  z-index: 10;
+  right: 14px;
+  top: 16px;
+  width: 10%;
+}
+
+.heartActive{
+  color: red;
+}
+
+.heart{
+  color: black;
 }
 
 .heartDiv{
@@ -315,6 +402,10 @@ heroCol1{
 
 .h3Card{
   margin: 50px 0 36px 80px;
+}
+
+.cardsContainer{
+  overflow: hidden !important;
 }
 
 
@@ -391,11 +482,10 @@ heroCol1{
 
 .PaginationDiv:hover{
   background-color: #024a2d;
-}
-
-.paginationP:hover{
   color: white;
 }
+
+
 
 /* View */
 /* Hero */

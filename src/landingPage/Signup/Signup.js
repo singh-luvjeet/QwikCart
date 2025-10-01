@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
-import './App.css'
+import '../../App.css'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import image4 from './assets/go.png'
-import image5 from './assets/gi.png'
-import image6 from './assets/f.png'
+import image4 from '../../assets/go.png'
+import image5 from '../../assets/gi.png'
+import image6 from '../../assets/f.png'
 import { FaEye } from 'react-icons/fa'
 import { FaEyeSlash } from 'react-icons/fa'
+import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Signup = ({ setToggle }) => {
+  const navigate = useNavigate();
   const [type, setType] = useState('password')
   const [type2, setType2] = useState('password')
   const [icon, setIcon] = useState(FaEyeSlash)
@@ -37,6 +41,15 @@ const Signup = ({ setToggle }) => {
     setToggle()
   }
 
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-right",
+    });
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -64,7 +77,7 @@ const Signup = ({ setToggle }) => {
         .required('Required'),
       email: Yup.string().email('Invalid email address').required('Required'),
       password: Yup.string()
-        .min(6, 'Password must be at least 8 characters')
+        .min(6, 'Password must be at least 6 characters')
         .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
         .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
         .matches(/\d/, 'Password must contain at least one number')
@@ -77,12 +90,28 @@ const Signup = ({ setToggle }) => {
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Confirm password is required')
     }).required('Required'),
-    onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2))
-      resetForm()
-    }
-  })
-  console.log(type)
+    
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:4000/signup",
+          values,
+          { withCredentials: true }
+        );
+        const { success, message } = data;
+        if (success) {
+          toast.success(message, { position: "top-right" });
+          setTimeout(() => navigate("/"), 1000);
+        } else {
+          toast.error(message, { position: "top-right" });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      resetForm();
+    },
+  });
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -212,6 +241,7 @@ const Signup = ({ setToggle }) => {
           <img src={image6} className='facebook' alt='..' />
         </div>
       </form>
+      <ToastContainer /> 
     </>
   )
 }
